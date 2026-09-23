@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ONEPIECE CARD PRICE｜ワンピースカード買取価格比較</title>
+<meta name="description" content="ワンピースカードの買取価格をショップ別に比較。カード名・型番・レアリティから検索できます。">
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#718096;--line:#e5e9f0;--accent:#e63946;--dark:#101828}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif}
+a{text-decoration:none;color:inherit}.top{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}.nav{max-width:1100px;margin:auto;padding:14px 18px;display:flex;align-items:center;justify-content:space-between}.logo{font-weight:900;letter-spacing:.5px}.logo span{color:var(--accent)}
+.container{max-width:1100px;margin:auto;padding:22px 18px}.hero{background:linear-gradient(135deg,#111827,#29364d);color:#fff;border-radius:22px;padding:28px;margin-bottom:18px}.hero h1{margin:0 0 8px;font-size:clamp(24px,5vw,42px)}.hero p{margin:0;color:#d7deea}.search{margin-top:20px;display:flex;gap:8px}.search input{flex:1;border:0;border-radius:12px;padding:14px 15px;font-size:16px}.btn{border:0;border-radius:12px;padding:12px 16px;font-weight:800;cursor:pointer}.red{background:var(--accent);color:#fff}.white{background:#fff;color:#111827}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}.stat b{display:block;font-size:22px;margin-top:5px}.muted{color:var(--muted);font-size:13px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.toolbar select,.toolbar button{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 5px 18px #1620330a}.thumb{height:210px;background:linear-gradient(135deg,#eef2f7,#d8dee8);display:grid;place-items:center;font-size:72px}.body{padding:15px}.tag{display:inline-block;font-size:12px;padding:4px 7px;border-radius:7px;background:#eef1f6;margin:2px}.name{font-weight:900;font-size:17px;margin:9px 0 2px}.code{font-size:12px;color:var(--muted)}.price{font-size:26px;font-weight:950;margin:10px 0}.up{color:#0a8f55;font-weight:800}.shops{border-top:1px solid var(--line);padding-top:10px}.shoprow{display:flex;justify-content:space-between;padding:6px 0;font-size:13px}.favorite{float:right;border:0;background:transparent;font-size:22px;cursor:pointer}.detail{display:none;margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px}.detail.active{display:block}.history{height:120px;display:flex;align-items:end;gap:7px;padding:12px;background:#f7f8fb;border-radius:12px}.bar{flex:1;background:#344054;border-radius:5px 5px 0 0;min-height:8px}.calc{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.calc input{padding:10px;border:1px solid var(--line);border-radius:10px;width:100px}.footer{padding:35px 18px;color:var(--muted);font-size:12px;text-align:center}
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.nav{padding:12px}.container{padding:15px 12px}.hero{padding:20px 16px;border-radius:17px}.cards{grid-template-columns:1fr}.thumb{height:240px}.search{flex-direction:column}.search .btn{width:100%}}
+</style>
+</head>
+<body>
+<header class="top"><div class="nav"><div class="logo">ONEPIECE <span>CARD PRICE</span></div><div class="muted">β版 / prototype</div></div></header>
+<main class="container">
+<section class="hero">
+<h1>ワンピースカード<br>買取価格比較</h1>
+<p>カード名・型番から検索して、ショップ別の買取価格をチェック。</p>
+<div class="search"><input id="q" placeholder="例：ルフィ / OP01-001 / コミパラ"><button class="btn red" onclick="render()">検索</button></div>
+</section>
+<div class="grid">
+<div class="stat"><div class="muted">掲載カード</div><b id="count">0</b></div>
+<div class="stat"><div class="muted">最高買取価格</div><b id="max">¥0</b></div>
+<div class="stat"><div class="muted">ショップ</div><b>3店</b></div>
+<div class="stat"><div class="muted">最終確認</div><b>2026/09/22</b></div>
+</div>
+<div class="toolbar">
+<select id="sort" onchange="render()"><option value="price">買取価格が高い順</option><option value="change">上昇率が高い順</option><option value="name">名前順</option></select>
+<select id="rarity" onchange="render()"><option value="">すべてのレアリティ</option><option>SEC</option><option>SR</option><option>SP</option><option>コミパラ</option><option>プロモ</option></select>
+<button onclick="toggleFav()">❤️ お気に入りのみ</button>
+</div>
+<section id="cards" class="cards"></section>
+<section id="detail" class="detail"></section>
+</main>
+<footer class="footer">価格は変動します。実際の買取価格・カード状態・在庫条件は各ショップで必ず確認してください。<br>※このv3は公開前のプロトタイプです。カード画像は権利確認前のためプレースホルダーを使用しています。</footer>
+<script>
+const data=[
+{name:"モンキー・D・ルフィ",code:"ST01-001",rarity:"プロモ",price:5500000,change:12,emoji:"👒",shops:[["ショップA",5500000],["ショップB",5200000],["ショップC",5000000]],history:[4200000,4500000,4800000,5000000,5300000,5500000]},
+{name:"モンキー・D・ルフィ",code:"OP13-118",rarity:"プロモ",price:5000000,change:8,emoji:"👒",shops:[["ショップA",5000000],["ショップB",4800000],["ショップC",4600000]],history:[3900000,4100000,4300000,4500000,4800000,5000000]},
+{name:"サカズキ",code:"OP02-099",rarity:"プロモ",price:5000000,change:5,emoji:"⚓",shops:[["ショップA",5000000],["ショップB",4700000],["ショップC",4500000]],history:[4100000,4200000,4400000,4500000,4800000,5000000]},
+{name:"ナミ",code:"OP01-016",rarity:"コミパラ",price:75000,change:14,emoji:"🧭",shops:[["ショップA",75000],["ショップB",72000],["ショップC",68000]],history:[50000,54000,58000,62000,68000,75000]},
+{name:"ジュエリー・ボニー",code:"OP08-105",rarity:"プロモ",price:75000,change:9,emoji:"🍕",shops:[["ショップA",75000],["ショップB",70000],["ショップC",65000]],history:[52000,56000,60000,63000,69000,75000]},
+{name:"カイドウ",code:"OP17-062",rarity:"コミパラ",price:75000,change:18,emoji:"🐉",shops:[["ショップA",75000],["ショップB",73000],["ショップC",68000]],history:[43000,50000,56000,61000,69000,75000]}
+];
+let fav=JSON.parse(localStorage.getItem("fav")||"[]"), favOnly=false;
+const yen=n=>"¥"+n.toLocaleString("ja-JP");
+function toggleFavorite(code){fav=fav.includes(code)?fav.filter(x=>x!==code):[...fav,code];localStorage.setItem("fav",JSON.stringify(fav));render()}
+function toggleFav(){favOnly=!favOnly;render()}
+function openDetail(i){
+ const c=data[i], max=Math.max(...c.history);
+ document.getElementById("detail").className="detail active";
+ document.getElementById("detail").innerHTML=`<button class="btn" onclick="document.getElementById('detail').className='detail'">閉じる</button>
+ <h2>${c.name} <small>${c.code}</small></h2><p>${c.rarity} / 最高買取 ${yen(c.price)}</p>
+ <h3>価格推移（デモ）</h3><div class="history">${c.history.map(v=>`<div class="bar" title="${yen(v)}" style="height:${Math.max(8,v/max*100)}%"></div>`).join("")}</div>
+ <h3>買取計算</h3><div class="calc"><input id="qty" type="number" min="1" value="1"><button class="btn red" onclick="alert('見積額：'+yen(c.price*Number(document.getElementById('qty').value||1)))">計算</button></div>`;
+ window.scrollTo({top:document.getElementById("detail").offsetTop-70,behavior:"smooth"});
+}
+function render(){
+ const q=document.getElementById("q").value.toLowerCase(), r=document.getElementById("rarity").value, s=document.getElementById("sort").value;
+ let arr=data.filter(c=>(!q||(c.name+c.code+c.rarity).toLowerCase().includes(q))&&(!r||c.rarity===r)&&(!favOnly||fav.includes(c.code)));
+ arr.sort((a,b)=>s==="name"?a.name.localeCompare(b.name):s==="change"?b.change-a.change:b.price-a.price);
+ document.getElementById("count").textContent=arr.length+"枚";
+ document.getElementById("max").textContent=arr.length?yen(Math.max(...arr.map(x=>x.price))):"¥0";
+ document.getElementById("cards").innerHTML=arr.map((c,i)=>`<article class="card">
+ <div class="thumb">${c.emoji}</div><div class="body"><button class="favorite" onclick="toggleFavorite('${c.code}')">${fav.includes(c.code)?"❤️":"♡"}</button>
+ <span class="tag">${c.rarity}</span><div class="name">${c.name}</div><div class="code">${c.code}</div><div class="price">${yen(c.price)}</div><div class="up">▲ ${c.change}%</div>
+ <div class="shops">${c.shops.map(x=>`<div class="shoprow"><span>${x[0]}</span><b>${yen(x[1])}</b></div>`).join("")}</div>
+ <button class="btn white" style="width:100%;margin-top:10px;border:1px solid var(--line)" onclick="openDetail(${data.indexOf(c)})">詳細を見る</button>
+ </div></article>`).join("")||"<p>条件に一致するカードがありません。</p>";
+}
+render();
+</script>
+</body></html>
